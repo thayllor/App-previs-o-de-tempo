@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "weather-check",
+    "slug": "weather-check",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "WEATHER_API_KEY": "fec809c9da4df25bff232620449750df",
+      "WEATHER_API_URL": "https://api.openweathermap.org/data/3.0/onecall?",
+      "LAT": "-32.09549080987219",
+      "LON": "-52.1598812216449"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow weather-check to use your location."
+        }
+      ]
+    ]
+  }
+}
