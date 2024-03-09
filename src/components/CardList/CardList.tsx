@@ -2,8 +2,33 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import CardComponent from "../CardComponent/CardComponent";
 
-const CardList = ({ initialWeatherData }) => {
-  const [weatherData, setWeatherData] = useState(initialWeatherData);
+interface WeatherData {
+  daily: Array<{
+    weather: { description: string }[];
+    humidity: number;
+    temp: {
+      max: number;
+      min: number;
+      morn: number;
+      eve: number;
+      night: number;
+    };
+    pop: number;
+    wind_speed: number;
+    feels_like: {
+      morn: number;
+      eve: number;
+      night: number;
+    };
+  }>;
+}
+
+interface CardListProps {
+  initialWeatherData: WeatherData;
+}
+
+const CardList: React.FC<CardListProps> = ({ initialWeatherData }) => {
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(initialWeatherData);
 
   useEffect(() => {
     setWeatherData(initialWeatherData);
@@ -28,4 +53,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
 export default CardList;
