@@ -26,6 +26,7 @@
     },
     "extra": {
       "WEATHER_API_KEY": "fec809c9da4df25bff232620449750df",
+      "GOOGLE_API_KEY": "AIzaSyBmStG4Z7pe3EA7WOPpqtGzDydfB8PS6q0",
       "WEATHER_API_URL": "https://api.openweathermap.org/data/3.0/onecall?",
       "LAT": "-32.09549080987219",
       "LON": "-52.1598812216449"

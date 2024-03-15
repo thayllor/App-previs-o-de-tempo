@@ -1,12 +1,13 @@
 import { Text } from "react-native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import React from "react";
 
-interface ConfiguraçõesProps {
-  // Adicione as props aqui
+interface ConfigurationProps {
+  navigation: BottomTabNavigationProp<any>;
 }
 
-export const Configurações: React.FC<ConfiguraçõesProps> = (props) => {
+export const Configuration: React.FC<ConfigurationProps> = (navigation) => {
   return <Text>Tela de Configurações</Text>;
 };
 
-export default Configurações;
+export default Configuration;

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { WeatherService } from "../../services";
-import { LocationOptions } from "../";
-import { NavigationProp } from "@react-navigation/native";
-import MapEvent from "react-native-maps";
+import LocationOptions from "../LocationOptions/LocationOptions";
+import * as Location from "expo-location";
+import LocationService from "../../services/LocationService";
 import { MapPressEvent } from "react-native-maps";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 interface Location {
   latitude: number;
   longitude: number;
+  cityName: string;
 }
 
 interface MapSelectionProps {
@@ -20,7 +21,14 @@ export const MapSelection: React.FC<MapSelectionProps> = ({ navigation }) => {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null
   );
+
   const [showOptions, setShowOptions] = useState(false);
+
+  const handleCancel = () => {
+    setSelectedLocation(null);
+    setShowOptions(false);
+  };
+
   useEffect(() => {
     const fetchLocation = async () => {
       const homeLocation = await WeatherService.getHomeLocation();
@@ -28,6 +36,7 @@ export const MapSelection: React.FC<MapSelectionProps> = ({ navigation }) => {
         setSelectedLocation({
           latitude: homeLocation.latitude,
           longitude: homeLocation.longitude,
+          cityName: homeLocation.cityName,
         });
       }
     };
@@ -35,16 +44,17 @@ export const MapSelection: React.FC<MapSelectionProps> = ({ navigation }) => {
     fetchLocation();
   }, []);
 
-  const handlePress = (event: MapPressEvent) => {
-    setSelectedLocation({
-      latitude: event.nativeEvent.coordinate.latitude,
-      longitude: event.nativeEvent.coordinate.longitude,
-    });
-    setShowOptions(true);
-  };
+  const handlePress = async (event: MapPressEvent) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    const cityName = await LocationService.getCityName(latitude, longitude);
 
-  const handleCancel = () => {
-    setShowOptions(false);
+    setSelectedLocation({
+      latitude,
+      longitude,
+      cityName,
+    });
+
+    setShowOptions(true);
   };
 
   return (
@@ -56,6 +66,7 @@ export const MapSelection: React.FC<MapSelectionProps> = ({ navigation }) => {
         <LocationOptions
           latitude={selectedLocation.latitude}
           longitude={selectedLocation.longitude}
+          cityName={selectedLocation.cityName}
           onCancel={handleCancel}
           navigation={navigation}
         />

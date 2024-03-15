@@ -7,6 +7,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 interface LocationOptionsProps {
   latitude: number;
   longitude: number;
+  cityName: string;
   onCancel: () => void;
   navigation: BottomTabNavigationProp<any>;
 }
@@ -14,23 +15,31 @@ interface LocationOptionsProps {
 const LocationOptions: React.FC<LocationOptionsProps> = ({
   latitude,
   longitude,
+  cityName,
   onCancel,
   navigation,
 }) => {
-  const TravelAndShow = () => {
-    StorageService.set("weathersomewhere", {
+  const TravelAndShow = async () => {
+    console.log("TravelAndShow");
+    await StorageService.set("weathersomewhere", {
       latitude: latitude.toString(),
       longitude: longitude.toString(),
+      cityName: cityName,
     });
-    StorageService.set("show", "weathersomewhere");
-    navigation.navigate("home"); // Navega para a tela inicial
+    await StorageService.set("show", "weathersomewhere");
+    console.log("show em location: " + (await StorageService.get("show")));
+    console.log(
+      "weathersomewhere: " + (await StorageService.get("weathersomewhere"))
+    );
+    console.log("gO HOME");
+    navigation.navigate("Home"); // Navega para a tela inicial
   };
   const makeNewFavoriteLocation = async () => {
-    await WeatherService.createFavoriteLocation(latitude, longitude);
-    TravelAndShow();
+    await WeatherService.createFavoriteLocation(latitude, longitude, cityName);
+    await TravelAndShow();
   };
-  const WeatherSomewhere = () => {
-    TravelAndShow();
+  const WeatherSomewhere = async () => {
+    await TravelAndShow();
   };
 
   return (

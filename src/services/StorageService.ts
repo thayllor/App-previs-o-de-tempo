@@ -18,4 +18,12 @@ export default class StorageService {
       console.error("Error fetching data", e);
     }
   }
+  static async clear() {
+    try {
+      await AsyncStorage.clear();
+      console.log("Storage successfully cleared!");
+    } catch (e) {
+      console.error("Error clearing storage", e);
+    }
+  }
 }

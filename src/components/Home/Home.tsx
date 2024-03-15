@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
+import WeatherDisplay from "../WeatherDisplay/WeatherDisplay";
 import { WeatherService } from "../../services";
-import { WeatherDisplay } from "../";
-import { NavigationProp } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 interface HomeProps {
@@ -10,7 +9,7 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ navigation }) => {
   const [location, setLocation] = useState<
-    { latitude: number; longitude: number } | undefined
+    { latitude: number; longitude: number; cityName: string } | undefined
   >(undefined);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export const Home: React.FC<HomeProps> = ({ navigation }) => {
       setLocation(locationData);
     };
 
-    fetchLocation();
+    // fetchLocation();
 
     const unsubscribe = navigation.addListener("focus", fetchLocation);
 
@@ -32,8 +31,10 @@ export const Home: React.FC<HomeProps> = ({ navigation }) => {
         <WeatherDisplay
           latitude={location.latitude}
           longitude={location.longitude}
+          cityName={location.cityName}
         />
       )}
     </>
   );
 };
+export default Home;

@@ -1,4 +1,10 @@
 import { Text } from "react-native";
-export function Home() {
-  return <Text>Tela de Favorites</Text>;
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+
+interface FavoritesProps {
+  navigation: BottomTabNavigationProp<any>;
 }
+export const Favorites: React.FC<FavoritesProps> = (navigation) => {
+  return <Text>Tela de Favorites</Text>;
+};
+export default Favorites;

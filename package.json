@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.22.3",
+    "@react-native-community/geolocation": "^3.2.0",
     "@react-navigation/bottom-tabs": "^6.5.16",
     "@react-navigation/native": "^6.1.14",
     "axios": "^1.6.7",
@@ -22,6 +23,7 @@
     "react-native": "^0.73.5",
     "react-native-device-info": "^10.13.1",
     "react-native-dotenv": "^3.4.11",
+    "react-native-geocoding": "^0.5.0",
     "react-native-maps": "^1.10.3"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "@testing-library/react-native": "^12.4.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.24",
+    "@types/node-fetch": "^2.6.11",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.73.0",
     "babel-preset-expo": "^10.0.1",
