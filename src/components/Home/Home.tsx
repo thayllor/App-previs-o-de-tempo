@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import WeatherDisplay from "../WeatherDisplay/WeatherDisplay";
 import { WeatherService } from "../../services";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { City } from "../../types";
 
 interface HomeProps {
   navigation: BottomTabNavigationProp<any>;
 }
 
 export const Home: React.FC<HomeProps> = ({ navigation }) => {
-  const [location, setLocation] = useState<
-    { latitude: number; longitude: number; cityName: string } | undefined
-  >(undefined);
+  const [location, setLocation] = useState<City | undefined | null>(undefined);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -25,16 +24,6 @@ export const Home: React.FC<HomeProps> = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]); // A função fetchLocation será executada quando o componente for montado e sempre que o componente receber foco
 
-  return (
-    <>
-      {location && (
-        <WeatherDisplay
-          latitude={location.latitude}
-          longitude={location.longitude}
-          cityName={location.cityName}
-        />
-      )}
-    </>
-  );
+  return <>{location && <WeatherDisplay {...location} />}</>;
 };
 export default Home;
