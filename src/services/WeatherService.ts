@@ -3,8 +3,8 @@ import Constants from "expo-constants";
 import { Alert } from "react-native";
 import StorageService from "./StorageService";
 import LocationService from "./LocationService";
+import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { error } from "console";
 import { City } from "../types";
 
 const API_KEY = Constants.expoConfig?.extra?.WEATHER_API_KEY;
