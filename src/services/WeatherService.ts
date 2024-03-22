@@ -104,6 +104,7 @@ export default class WeatherService {
     cityName: string
   ) {
     try {
+      console.log("createFavoriteLocation");
       let favorites: City[] = (await StorageService.get("favorites")) || [];
 
       const newCity: City = {
@@ -114,6 +115,12 @@ export default class WeatherService {
         key: uuidv4(), // Add a unique key for each city
       };
 
+      favorites.map((city) => {
+        if (city.cityName === newCity.cityName) {
+          Alert.alert("Cidade já está nos favoritos");
+          throw new Error("Cidade já está nos favoritos");
+        }
+      });
       favorites.push(newCity);
 
       await StorageService.set("favorites", favorites);
@@ -127,45 +134,43 @@ export default class WeatherService {
   //3. Se a localização a ser mostrada é uma localização favorita
   static async show() {
     console.log("show");
-    let locationData: City | undefined | null = null;
+    let CityToShow: City | undefined | null = null;
 
     try {
       const show = await StorageService.get("show");
-      const favoritesss = await StorageService.get("favorites");
-      console.log("favoritesss" + JSON.stringify(favoritesss, null, 2));
+      const favoritesToLog = await StorageService.get("favorites");
+      console.log("favoritesss" + JSON.stringify(favoritesToLog, null, 2));
       console.log("Valor de show: " + show);
 
       //1. Se a localização a ser mostrada é a home ou é a primeira execução de show
 
       if (show === "home" || show === null) {
         console.log("show -- home");
-        locationData = await this.getHomeLocation();
-        console.log(
-          "show: locationData" + JSON.stringify(locationData, null, 2)
-        );
+        CityToShow = await this.getHomeLocation();
+        console.log("show: locationData" + JSON.stringify(CityToShow, null, 2));
       } else if (show === "weathersomewhere") {
         console.log("show -- weathersomewhere");
         const somewhereLocation: City = await StorageService.get(
           "weathersomewhere"
         );
         console.log("tempo em" + somewhereLocation.cityName);
-        locationData = somewhereLocation;
+        CityToShow = somewhereLocation;
       } else {
         console.log("show--------- favorites");
         const favorites: City[] = await StorageService.get("favorites");
         if (favorites) {
-          const favoriteLocation = favorites.find(
+          const favoriteCity = favorites.find(
             (favorite: City) => favorite.cityName === show
           );
-          if (favoriteLocation) {
-            locationData = favoriteLocation;
+          if (favoriteCity) {
+            CityToShow = favoriteCity;
           } else {
             Alert.alert("Cidade favorita não encontrada!"); // Para aplicações React Native
-            locationData = await this.getHomeLocation();
+            CityToShow = await this.getHomeLocation();
           }
         }
       }
-      return locationData;
+      return CityToShow;
     } catch (error) {
       console.error(error);
       Alert.alert(
@@ -173,7 +178,7 @@ export default class WeatherService {
       );
       const currentLocation = await getCurrentLocationAndCityNameFromService();
 
-      locationData = {
+      CityToShow = {
         cityName: currentLocation?.cityName,
         latitude: currentLocation?.latitude,
         longitude: currentLocation?.longitude,
@@ -181,7 +186,7 @@ export default class WeatherService {
         key: uuidv4(),
       } as City;
       console.log("saindo do show");
-      return locationData;
+      return CityToShow;
     }
   }
 }
