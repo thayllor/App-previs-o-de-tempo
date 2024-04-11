@@ -39,40 +39,37 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
-        {/* icone de engrenagem */}
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitleStyle: { fontSize: 24 },
+          // headerRight: () => (
+          //   <Button
+          //     title="Clear Storage"
+          //     onPress={() => {
+          //       StorageService.clear();
+          //     }}
+          //   />
+          // )
+        }}
+      >
+        {/* icone de engrenagem
         <Tab.Screen
           name="Configuration"
           options={{
-            headerShown: true,
-            headerRight: () => (
-              <Button
-                title="Clear Storage"
-                onPress={() => {
-                  StorageService.clear();
-                }}
-              />
-            ),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="build" color={color} size={size} />
             ),
           }}
         >
           {(props: TabScreenProps) => <Configuration {...props} />}
-        </Tab.Screen>
+        </Tab.Screen> */}
         {/* Home */}
         <Tab.Screen
           name="Home"
           options={{
-            headerShown: true,
-            headerRight: () => (
-              <Button
-                title="Clear Storage"
-                onPress={() => {
-                  StorageService.clear();
-                }}
-              />
-            ),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="md-home" color={color} size={size} />
             ),
@@ -84,15 +81,6 @@ export default function App() {
         <Tab.Screen
           name="Favorites"
           options={{
-            headerShown: true,
-            headerRight: () => (
-              <Button
-                title="Clear Storage"
-                onPress={() => {
-                  StorageService.clear();
-                }}
-              />
-            ),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="star" color={color} size={size} />
             ),
@@ -104,15 +92,6 @@ export default function App() {
         <Tab.Screen
           name="MapSelection"
           options={{
-            headerShown: true,
-            headerRight: () => (
-              <Button
-                title="Clear Storage"
-                onPress={() => {
-                  StorageService.clear();
-                }}
-              />
-            ),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="map" color={color} size={size} />
             ),
